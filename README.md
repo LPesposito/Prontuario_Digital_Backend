@@ -15,8 +15,6 @@ O **Prontuário Digital** é uma aplicação que visa facilitar o gerenciamento 
 ## Tecnologias Utilizadas
 
 - **Python** (FastAPI, SQLAlchemy, Pydantic)
-- **Banco de Dados**: (Especifique o banco utilizado, ex.: PostgreSQL, SQLite)
-- **Frontend**: React (ou outra tecnologia usada no frontend)
 
 ## Repositórios do Projeto
 
