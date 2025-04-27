@@ -10,7 +10,7 @@ O **Prontuário Digital** é uma aplicação que visa facilitar o gerenciamento 
 ## Contribuintes
 
 - **Luan Eposito** - Desenvolvimento Backend  
-- **Bruno Roling** - Desenvolvimento Frontend  
+- **Bruno Rodling** - Desenvolvimento Frontend  
 
 ## Tecnologias Utilizadas
 
