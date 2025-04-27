@@ -1,6 +1,7 @@
 # Prontuário Digital - Backend
+### Projeto Integrador 3 - UNIVESP
 
-Este é o backend do projeto **Prontuário Digital**, desenvolvido como parte do **Projeto Integrador 3** da faculdade. O objetivo do projeto é criar uma aplicação para gerenciamento de prontuários médicos, com funcionalidades modernas e uma arquitetura eficiente.
+Este é o backend do projeto **Prontuário Digital**, desenvolvido como parte do **Projeto Integrador 3** da faculdade que curso no momento (2025) Bacharelador em Tecnologia da Informação - UNIVESP. O objetivo do projeto é criar uma aplicação para criar de prontuários médicos digital.
 
 ## Sobre o Projeto
 
