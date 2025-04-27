@@ -1,0 +1,2 @@
+- criação do paciente se não existente
+- fazer verificação de cpf no endpoint, caso repetido não registrar paciente apenas prontuario
