@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, ForeignKey, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -17,4 +17,20 @@ class Paciente(Base):
 class Prontuario(Base): 
     __tablename__ = 'prontuarios'
     
-    id = Column(Integer, primary_key=True, autoincrement=True)    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    id_paciente = Column(ForeignKey('pacientes.id'), Integer, nullable=False)
+    data_consulta = Column(Date, nullable=False)
+    queixa_principal = Column(String, nullable=False)
+    historia_doenca_atual = Column(String, nullable=False)
+    historico_medico_pregressa = Column(String, nullable=False)
+    historico_familiar = Column(String, nullable=False)
+    medicamentos_em_uso = Column(String, nullable=False)
+    alergias = Column(String, nullable=False)
+    pressao_arterial = Column(String, nullable=False)
+    frequencia_cardiaca = Column(String, nullable=False)
+    temperatura = Column(String, nullable=False)
+    observacoes_exame_fisico = Column(String, nullable=False)
+    hipoteses_diagnosticas = Column(String, nullable=False)
+    diagnostico_definitivo = Column(String, nullable=False)
+    prescricao = Column(String, nullable=False)
+    orientacoes = Column(String, nullable=False)
