@@ -1,7 +1,7 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Date
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, ForeignKey, Integer, String, Date, Text
+from sqlalchemy.orm import relationship
+from .database import Base
 
-Base = declarative_base()
 
 class Paciente(Base):
     __tablename__ = 'pacientes'
@@ -13,24 +13,25 @@ class Paciente(Base):
     data_nascimento = Column(Date, nullable=False)
     cpf = Column(String(14), unique=True, nullable=False)
     telefone = Column(String(15), nullable=False)
+    prontuarios = relationship("Prontuario", back_populates="paciente")
 
 class Prontuario(Base): 
     __tablename__ = 'prontuarios'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    id_paciente = Column(ForeignKey('pacientes.id'), Integer, nullable=False)
+    id_paciente = Column(Integer, ForeignKey('pacientes.id'), nullable=False)
     data_consulta = Column(Date, nullable=False)
-    queixa_principal = Column(String, nullable=False)
-    historia_doenca_atual = Column(String, nullable=False)
-    historico_medico_pregressa = Column(String, nullable=False)
-    historico_familiar = Column(String, nullable=False)
-    medicamentos_em_uso = Column(String, nullable=False)
-    alergias = Column(String, nullable=False)
-    pressao_arterial = Column(String, nullable=False)
-    frequencia_cardiaca = Column(String, nullable=False)
-    temperatura = Column(String, nullable=False)
-    observacoes_exame_fisico = Column(String, nullable=False)
-    hipoteses_diagnosticas = Column(String, nullable=False)
-    diagnostico_definitivo = Column(String, nullable=False)
-    prescricao = Column(String, nullable=False)
-    orientacoes = Column(String, nullable=False)
+    queixa_principal = Column(Text, nullable=False)
+    historia_doenca_atual = Column(Text, nullable=False)
+    historico_medico_pregressa = Column(Text, nullable=False)
+    historico_familiar = Column(Text, nullable=False)
+    medicamentos_em_uso = Column(Text, nullable=False)
+    alergias = Column(Text, nullable=False)
+    pressao_arterial = Column(Text, nullable=False)
+    frequencia_cardiaca = Column(Text, nullable=False)
+    temperatura = Column(Text, nullable=False)
+    observacoes_exame_fisico = Column(Text, nullable=False)
+    hipoteses_diagnosticas = Column(Text, nullable=False)
+    diagnostico_definitivo = Column(Text, nullable=False)
+    prescricao = Column(Text, nullable=False)
+    orientacoes = Column(Text, nullable=False)
