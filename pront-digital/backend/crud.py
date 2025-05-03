@@ -15,7 +15,7 @@ def get_paciente_by_cpf(db: Session, cpf: str):
 def get_pacientes(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Paciente).offset(skip).limit(limit).all()
 
-
+# função auxiliar para criar um paciente
 def create_paciente(db: Session, paciente: schemas.PacienteCreate):
     db_paciente = models.Paciente(
         nome_paciente=paciente.nome_paciente,
@@ -67,3 +67,16 @@ def create_prontuario(db: Session, prontuario: schemas.ProntuarioCreate):
     db.commit()
     db.refresh(db_prontuario)
     return db_prontuario
+
+def register_prontuario(db: Session, prontuario_data: schemas.ProntuarioCreate, paciente_data: schemas.PacienteCreate):
+    paciente = get_paciente_by_cpf(db, paciente_data.cpf)
+    if not paciente:
+        paciente = create_paciente(db, paciente_data)
+    prontuario = models.Prontuario(
+        id_paciente=paciente.id,
+        **prontuario_data.dict(by_alias=True)
+    )
+    db.add(prontuario)
+    db.commit()
+    db.refresh(prontuario)
+    return prontuario

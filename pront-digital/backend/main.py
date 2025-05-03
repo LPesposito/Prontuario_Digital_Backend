@@ -1,3 +1,4 @@
+from datetime import date
 from . import crud
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -20,7 +21,7 @@ def get_db():
 
 
 # Rotas para Paciente
-@app.post("/pacientes/", response_model=schemas.Paciente)
+@app.post("/pacientes/register", response_model=schemas.Paciente)
 def create_paciente(paciente: schemas.PacienteCreate, db: Session = Depends(get_db)):
     db_paciente = crud.get_paciente_by_cpf(db, cpf=paciente.cpf)
     if db_paciente:
@@ -42,14 +43,6 @@ def read_pacientes(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)
 
 
 # Rotas para Prontuário
-@app.post("/prontuarios/", response_model=schemas.Prontuario)
-def create_prontuario(prontuario: schemas.ProntuarioCreate, db: Session = Depends(get_db)):
-    db_paciente = crud.get_paciente(db, paciente_id=prontuario.id_paciente)
-    if db_paciente is None:
-        raise HTTPException(status_code=404, detail="Paciente não encontrado")
-    return crud.create_prontuario(db=db, prontuario=prontuario)
-
-
 @app.get("/prontuarios/{prontuario_id}", response_model=schemas.Prontuario)
 def read_prontuario(prontuario_id: int, db: Session = Depends(get_db)):
     db_prontuario = crud.get_prontuario(db, prontuario_id=prontuario_id)
@@ -63,10 +56,35 @@ def read_prontuarios(skip: int = 0, limit: int = 10, db: Session = Depends(get_d
     return crud.get_prontuarios(db, skip=skip, limit=limit)
 
 
-@app.get("/pacientes/{paciente_id}/prontuarios/", response_model=list[schemas.Prontuario])
-def read_prontuarios_by_paciente(paciente_id: int, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    db_paciente = crud.get_paciente(db, paciente_id=paciente_id)
-    if db_paciente is None:
-        raise HTTPException(status_code=404, detail="Paciente não encontrado")
-    return crud.get_prontuarios_by_paciente(db, paciente_id=paciente_id, skip=skip, limit=limit)
+@app.post("/prontuarios/register", response_model=schemas.Prontuario)
+def register_prontuario_endpoint(
+    data: dict,  # Recebe o JSON completo do front-end
+    db: Session = Depends(get_db)
+):
+    paciente_data = schemas.PacienteCreate(
+        nome=data["nome"],
+        idade=data["idade"],
+        sexo=data["sexo"],
+        data_nascimento=data["data-nascimento"],
+        cpf=data["cpf"],
+        telefone=data["telefone"]
+    )
+    prontuario_data = schemas.ProntuarioCreate(
+        data_consulta=data["data_consulta"],
+        queixa_principal=data["queixa-principal"],
+        historia_doenca_atual=data["historia-doenca-atual"],
+        historico_medico_pregressa=data["historico-medico-pregressa"],
+        historico_familiar=data["historico-familiar"],
+        medicamentos_em_uso=data["medicamentos-em-uso"],
+        alergias=data["alergias"],
+        pressao_arterial=data["pressao-arterial"],
+        frequencia_cardiaca=data["frequencia-cardiaca"],
+        temperatura=data["temperatura"],
+        observacoes_exame_fisico=data["observacoes-exame-fisico"],
+        hipoteses_diagnosticas=data["hipoteses-diagnosticas"],
+        diagnostico_definitivo=data["diagnostico-definitivo"],
+        prescricao=data["prescricao"],
+        orientacoes=data["orientacoes"]
+    )
+    return crud.register_prontuario(db, prontuario_data=prontuario_data, paciente_data=paciente_data)
 
