@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # URL do banco de dados
+#<dialect>://<username>:<password>@<host>:<port>/<database>
 DATABASE_URL = 'sqlite:///./prontuarios.db'
 
 # Configuração do SQLAlchemy

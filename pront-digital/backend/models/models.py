@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Date, Text
 from sqlalchemy.orm import relationship
-from .database import Base
+from ..database.database import Base
 
 
 class Paciente(Base):
@@ -35,3 +35,5 @@ class Prontuario(Base):
     diagnostico_definitivo = Column(Text, nullable=False)
     prescricao = Column(Text, nullable=False)
     orientacoes = Column(Text, nullable=False)
+    
+    paciente = relationship("Paciente", back_populates="prontuarios")
