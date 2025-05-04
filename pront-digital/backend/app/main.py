@@ -24,14 +24,14 @@ def adicionar_paciente(paciente: PacienteCreate):
 def listar_pacientes():
     return get_pacientes()
 
-@app.get("/pacientes/{paciente_id}", response_model=PacienteRead)
+@app.get("/paciente/{paciente_id}", response_model=PacienteRead)
 def buscar_paciente_por_id(paciente_id: int):
     paciente = get_paciente_by_id(paciente_id)
     if not paciente:
         raise HTTPException(status_code=404, detail="Paciente não encontrado")
     return paciente
 
-@app.get("/pacientes/cpf/{cpf}", response_model=PacienteRead)
+@app.get("/paciente/cpf/{cpf}", response_model=PacienteRead)
 def buscar_paciente_por_cpf(cpf: str):
     paciente = get_paciente_by_cpf(cpf)
     if not paciente:
@@ -55,13 +55,13 @@ def adicionar_prontuario(prontuario: ProntuarioCreate):
 def listar_prontuarios():
     return get_prontuarios()
 
-@app.get("/prontuarios/{prontuario_id}", response_model=ProntuarioRead)
+@app.get("/prontuario/{prontuario_id}", response_model=ProntuarioRead)
 def buscar_prontuario_por_id(prontuario_id: int):
     prontuario = get_prontuario_by_id(prontuario_id)
     if not prontuario:
         raise HTTPException(status_code=404, detail="Prontuário não encontrado")
     return prontuario
 
-@app.get("/pacientes/{paciente_id}/prontuarios", response_model=List[ProntuarioRead])
+@app.get("/paciente/{paciente_id}/prontuarios", response_model=List[ProntuarioRead])
 def buscar_prontuarios_por_paciente(paciente_id: int):
     return get_prontuarios_by_paciente_id(paciente_id)
