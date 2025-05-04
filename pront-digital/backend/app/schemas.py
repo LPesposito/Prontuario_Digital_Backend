@@ -1,32 +1,27 @@
-from pydantic import BaseModel
+from typing import Optional
 from datetime import date
-from typing import List, Optional
+from sqlmodel import SQLModel
 
 
-class PacienteBase(BaseModel):
+# Paciente
+class PacienteBase(SQLModel):
     nome_paciente: str
-    idade: int
     sexo: str
     data_nascimento: date
     cpf: str
     telefone: str
 
-
 class PacienteCreate(PacienteBase):
     pass
 
-
-class Paciente(PacienteBase):
+class PacienteRead(PacienteBase):
     id: int
-    prontuarios: Optional[List["Prontuario"]] = []  # Relacionamento com prontuários
-
-    class Config:
-        from_attributes = True
 
 
-class ProntuarioBase(BaseModel):
+# Prontuário
+class ProntuarioBase(SQLModel):
     id_paciente: int
-    data_consulta: date
+    data_consulta: Optional[date] = None
     queixa_principal: str
     historia_doenca_atual: str
     historico_medico_pregressa: str
@@ -42,14 +37,8 @@ class ProntuarioBase(BaseModel):
     prescricao: str
     orientacoes: str
 
-
-# Schema para criação de Prontuário
 class ProntuarioCreate(ProntuarioBase):
     pass
 
-
-class Prontuario(ProntuarioBase):
+class ProntuarioRead(ProntuarioBase):
     id: int
-
-    class Config:
-        from_attributes = True
