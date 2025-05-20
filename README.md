@@ -45,3 +45,50 @@ O **Prontuário Digital** é uma aplicação que visa facilitar o gerenciamento 
    ```bash
    uvicorn main:app --reload
    ```
+
+Rotas da API - Prontuário Digital
+
+### Pacientes
+
+POST   /pacientes/registrar  
+- Cadastra um novo paciente  
+- Body: PacienteCreate
+
+GET    /pacientes/  
+- Lista todos os pacientes  
+- Response: List[PacienteRead]
+
+GET    /paciente/{paciente_id}  
+- Busca paciente pelo ID  
+- Response: PacienteRead
+
+GET    /paciente/cpf/{cpf}  
+- Busca paciente pelo CPF  
+- Response: PacienteRead
+
+### Prontuários
+
+POST   /prontuario/resgistrar-auto  
+- Cria paciente e prontuário juntos  
+- Body:  
+  {
+    "paciente": PacienteCreate,
+    "prontuario": ProntuarioCreate
+  }
+
+POST   /prontuarios/registrar-novo  
+- Cadastra um novo prontuário  
+- Body: ProntuarioCreate  
+- Response: ProntuarioRead
+
+GET    /prontuarios/  
+- Lista todos os prontuários  
+- Response: List[ProntuarioRead]
+
+GET    /prontuario/{prontuario_id}  
+- Busca prontuário pelo ID  
+- Response: ProntuarioRead
+
+GET    /paciente/{paciente_id}/prontuarios  
+- Lista prontuários de um paciente  
+- Response: List[ProntuarioRead]
