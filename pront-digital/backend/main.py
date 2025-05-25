@@ -54,9 +54,7 @@ def criar_prontuario_com_paciente(
     paciente: PacienteCreate = Body(...),
     prontuario: ProntuarioCreate = Body(...)
 ):
-    print("Recebido POST /prontuario/registrar-auto")
     paciente_existente = get_paciente_by_cpf(paciente.cpf)
-    print("Resultado get_paciente_by_cpf:", paciente_existente)
     if paciente_existente:
         paciente_obj = paciente_existente
     else:
@@ -67,9 +65,7 @@ def criar_prontuario_com_paciente(
     prontuario_dict = prontuario.model_dump()
     prontuario_dict['id_paciente'] = paciente_obj.id
     prontuario_obj = Prontuario(**prontuario_dict)
-    print("Prontuário pronto para criar:", prontuario_obj)
     resultado = create_prontuario(prontuario_obj)
-    print("Prontuário criado:", resultado)
     return resultado
 
 # rota para prontuário
