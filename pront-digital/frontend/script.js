@@ -202,5 +202,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const buscarProntuarioButton = document.getElementById('buscar-prontuario');
+    const cpfRecuperacaoInput = document.getElementById('cpf-recuperacao');
+    const dadosPacienteRecuperadosPre = document.getElementById('dados-paciente-recuperados');
+
+    buscarProntuarioButton.addEventListener('click', async () => {
+        const cpfParaBuscar = cpfRecuperacaoInput.value.trim();
+        if (cpfParaBuscar) {
+            try {
+                // Busca paciente pelo CPF
+                const pacienteResp = await fetch(`http://localhost:8000/paciente/cpf/${cpfParaBuscar}`);
+                if (!pacienteResp.ok) {
+                    dadosPacienteRecuperadosPre.textContent = 'Paciente não encontrado para este CPF.';
+                    return;
+                }
+                const paciente = await pacienteResp.json();
+
+                // Busca prontuários do paciente pelo ID
+                const prontuariosResp = await fetch(`http://localhost:8000/paciente/${paciente.id}/prontuarios`);
+                if (!prontuariosResp.ok) {
+                    dadosPacienteRecuperadosPre.textContent = 'Nenhum prontuário encontrado para este paciente.';
+                    return;
+                }
+                const prontuarios = await prontuariosResp.json();
+
+                if (prontuarios.length === 0) {
+                    dadosPacienteRecuperadosPre.textContent = 'Nenhum prontuário encontrado para este paciente.';
+                } else {
+                    dadosPacienteRecuperadosPre.textContent = JSON.stringify(prontuarios, null, 2);
+                }
+            } catch (error) {
+                dadosPacienteRecuperadosPre.textContent = 'Erro ao buscar prontuário: ' + error.message;
+            }
+        } else {
+            dadosPacienteRecuperadosPre.textContent = 'Por favor, digite um CPF para buscar.';
+        }
+    });
     
 });
