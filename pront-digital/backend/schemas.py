@@ -6,10 +6,10 @@ from sqlmodel import SQLModel
 # Paciente
 class PacienteBase(SQLModel):
     nome_paciente: str
-    sexo: str
     data_nascimento: date
     cpf: str
-    telefone: str
+    sexo: Optional[str] = None
+    telefone: Optional[str] = None
 
 class PacienteCreate(PacienteBase):
     pass
@@ -20,22 +20,22 @@ class PacienteRead(PacienteBase):
 
 # Prontuário
 class ProntuarioBase(SQLModel):
-    id_paciente: int
+    id_paciente: Optional[int] = None
     data_consulta: Optional[date] = None
     queixa_principal: str
-    historia_doenca_atual: str
-    historico_medico_pregressa: str
-    historico_familiar: str
-    medicamentos_em_uso: str
-    alergias: str
-    pressao_arterial: str
-    frequencia_cardiaca: str
-    temperatura: str
-    observacoes_exame_fisico: str
-    hipoteses_diagnosticas: str
-    diagnostico_definitivo: str
-    prescricao: str
-    orientacoes: str
+    historia_doenca_atual: Optional[str] = None
+    historico_medico_pregressa: Optional[str] = None
+    historico_familiar: Optional[str] = None
+    medicamentos_em_uso: Optional[str] = None
+    alergias: Optional[str] = None
+    pressao_arterial: Optional[str] = None
+    frequencia_cardiaca: Optional[str] = None
+    temperatura: Optional[str] = None
+    observacoes_exame_fisico: Optional[str] = None
+    hipoteses_diagnosticas: Optional[str] = None
+    diagnostico_definitivo: Optional[str] = None
+    prescricao: Optional[str] = None
+    orientacoes: Optional[str] = None
 
 class ProntuarioCreate(ProntuarioBase):
     pass

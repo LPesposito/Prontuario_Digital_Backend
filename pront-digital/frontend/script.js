@@ -46,44 +46,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const dados = {};
     const formulario = document.getElementById('formulario-prontuario');
     const elementos = formulario.querySelectorAll('input, select, textarea');
+    let camposObrigatorios = ['nome', 'data-nascimento', 'cpf', 'queixa-principal'];
+    let camposVazios = [];
+
     elementos.forEach(elemento => {
         if (elemento.id) {
-            dados[elemento.id] = elemento.value;
+            if (camposObrigatorios.includes(elemento.id)) {
+                dados[elemento.id] = elemento.value;
+                if (!elemento.value) {
+                    camposVazios.push(elemento.id);
+                }
+            } else {
+                // Só adiciona os outros campos se não estiverem vazios
+                if (elemento.value) {
+                    dados[elemento.id] = elemento.value;
+                }
+            }
         }
     });
+
+    if (camposVazios.length > 0) {
+        alert('Preencha todos os campos obrigatórios: ' + camposVazios.join(', '));
+        return;
+    }
 
     // Monta o JSON no formato esperado pelo backend
     const payload = {
         paciente: {
             nome_paciente: dados['nome'],
-            sexo: dados['sexo'],
+            sexo: dados['sexo'] || "",
             data_nascimento: dados['data-nascimento'],
             cpf: dados['cpf'],
-            telefone: dados['telefone']
+            telefone: dados['telefone'] || "Não informado",
         },
         prontuario: {
-            id_paciente: 0, // O backend pode ignorar ou sobrescrever esse campo
             data_consulta: new Date().toISOString().split('T')[0],
             queixa_principal: dados['queixa-principal'],
-            historia_doenca_atual: dados['historia-doenca-atual'],
-            historico_medico_pregressa: dados['historico-medico-pregressa'],
-            historico_familiar: dados['historico-familiar'],
-            medicamentos_em_uso: dados['medicamentos-em-uso'],
-            alergias: dados['alergias'],
-            pressao_arterial: dados['pressao-arterial'],
-            frequencia_cardiaca: dados['frequencia-cardiaca'],
-            temperatura: dados['temperatura'],
-            observacoes_exame_fisico: dados['observacoes-exame-fisico'],
-            hipoteses_diagnosticas: dados['hipoteses-diagnosticas'],
-            diagnostico_definitivo: dados['diagnostico-definitivo'],
-            prescricao: dados['prescricao'],
-            orientacoes: dados['orientacoes']
+            historia_doenca_atual: dados['historia-doenca-atual'] || "",
+            historico_medico_pregressa: dados['historico-medico-pregressa'] || "",
+            historico_familiar: dados['historico-familiar'] || "",
+            medicamentos_em_uso: dados['medicamentos-em-uso'] || "",
+            alergias: dados['alergias'] || "",
+            pressao_arterial: dados['pressao-arterial'] || "",
+            frequencia_cardiaca: dados['frequencia-cardiaca'] || "",
+            temperatura: dados['temperatura'] || "",
+            observacoes_exame_fisico: dados['observacoes-exame-fisico'] || "",
+            hipoteses_diagnosticas: dados['hipoteses-diagnosticas'] || "",
+            diagnostico_definitivo: dados['diagnostico-definitivo'] || "",
+            prescricao: dados['prescricao'] || "",
+            orientacoes: dados['orientacoes'] || ""
         }
     };
-
     // Envia para o backend
     try {
-        const response = await fetch('http://localhost:8000/prontuario/resgistrar-auto', {
+        const response = await fetch('http://localhost:8000/prontuario/registrar-auto', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -101,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
         alert('Erro ao salvar prontuário: ' + error.message);
     }
-};
+    };
 
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
         recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();

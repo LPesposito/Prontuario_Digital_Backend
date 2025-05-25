@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from typing import List
 from crud import (
     create_paciente, get_pacientes, get_paciente_by_id, get_paciente_by_cpf,
@@ -9,7 +9,18 @@ from schemas import PacienteCreate, PacienteRead, ProntuarioCreate, ProntuarioRe
 from models import Paciente, Prontuario
 from database import create_db_and_tables
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todas as origens
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos os métodos HTTP
+    allow_headers=["*"],  # Permite todos os cabeçalhos
+)
+
 @app.on_event("startup")
 def startup_event():
     create_db_and_tables()
@@ -38,12 +49,28 @@ def buscar_paciente_por_cpf(cpf: str):
         raise HTTPException(status_code=404, detail="Paciente não encontrado")
     return paciente
 
-@app.post("/prontuario/resgistrar-auto")
-def criar_prontuario_com_paciente(paciente: PacienteCreate,prontuario: ProntuarioCreate):
-    paciente_obj = Paciente.model_validate(paciente)
-    prontuario_obj = Prontuario.model_validate(prontuario)
+@app.post("/prontuario/registrar-auto")
+def criar_prontuario_com_paciente(
+    paciente: PacienteCreate = Body(...),
+    prontuario: ProntuarioCreate = Body(...)
+):
+    print("Recebido POST /prontuario/registrar-auto")
+    paciente_existente = get_paciente_by_cpf(paciente.cpf)
+    print("Resultado get_paciente_by_cpf:", paciente_existente)
+    if paciente_existente:
+        paciente_obj = paciente_existente
+    else:
+        paciente_obj = Paciente(**paciente.model_dump())
+        paciente_obj = create_paciente(paciente_obj)
+        print("Paciente criado:", paciente_obj)
 
-    return create_prontuario_com_paciente(paciente_obj, prontuario_obj)
+    prontuario_dict = prontuario.model_dump()
+    prontuario_dict['id_paciente'] = paciente_obj.id
+    prontuario_obj = Prontuario(**prontuario_dict)
+    print("Prontuário pronto para criar:", prontuario_obj)
+    resultado = create_prontuario(prontuario_obj)
+    print("Prontuário criado:", resultado)
+    return resultado
 
 # rota para prontuário
 @app.post("/prontuarios/registrar-novo", response_model=ProntuarioRead)
