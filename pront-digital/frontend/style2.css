@@ -1,0 +1,480 @@
+body {
+    font-family: 'Montserrat';
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.app-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 960px;
+    overflow: hidden;
+}
+
+.app-header {
+    background-color: #9FDFE0;
+    color: white;
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    position: relative;
+    padding-right: 50px;
+}
+
+.app-header img{
+    width: 100px;
+    margin-bottom: -50px;
+}
+
+.app-header h1 {
+    margin-bottom: 10px;
+    font-size: 50px;
+    font-weight: normal;
+    color: #0B8189;
+}
+
+.menu-icon {
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 25px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-icon div {
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.menu-icon.open div:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+
+.menu-icon.open div:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-icon.open div:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+.app-nav {
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+.app-nav button {
+    background-color: transparent;
+    color: #495057;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+}
+
+.app-nav button.ativo,
+.app-nav button:hover {
+    background-color: #9FDFE0;
+    color: #0B8189;
+}
+
+.app-main {
+    padding: 30px;
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+section h2, section h3 {
+    color: #343a40;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #495057;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+    width: calc(100% - 16px);
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #495057;
+    transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #9FDFE0;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+select {
+    height: auto;
+    padding: 10px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-button {
+    background-color: #55ccd1;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 30px auto 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button:hover {
+    background-color: #4aeeb5;
+}
+
+.hidden {
+    display: none;
+}
+
+#visualizacao-prontuario {
+    margin-top: 40px;
+    padding: 25px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+#visualizacao-prontuario h2 {
+    text-align: left;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+#dados-salvos {
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #212529;
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+/* Media Queries para Tablets (largura máxima de 768px) */
+@media (max-width: 768px) {
+    .app-container {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .app-header {
+        padding: 15px 20px;
+        border-radius: 15px;
+    }
+
+    .app-header h1 {
+        font-size: 3em;
+    }
+
+    .app-header img{
+        width: 100px;
+        margin-bottom: -50px;
+    }
+
+    .app-nav {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 10px 15px;
+        border-radius: 15px;
+    }
+
+    .app-nav button {
+        margin: 0 5px;
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .app-main {
+        padding: 20px;
+    }
+
+    section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 0.95em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 0.95em;
+        padding: 8px;
+    }
+
+    .submit-button {
+        font-size: 1em;
+        padding: 10px 20px;
+        margin-top: 20px;
+    }
+
+    #visualizacao-prontuario {
+        margin-top: 30px;
+        padding: 15px;
+    }
+
+    #visualizacao-prontuario h2 {
+        font-size: 1.1em;
+    }
+
+    #dados-salvos {
+        font-size: 0.85em;
+        padding: 10px;
+    }
+}
+
+/* Para Celulares (largura máxima de 480px) */
+@media (max-width: 480px) {
+    .app-container {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .app-header {
+        padding: 15px;
+    }
+
+    .app-header h1 {
+        font-size: 1.8em;
+    }
+
+    .app-header img{
+        width: 100px;
+        margin-bottom: -20px;
+    }
+
+    .app-nav {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 8px;
+    }
+
+    .app-nav button {
+        margin: 0 3px;
+        padding: 6px 10px;
+        font-size: 0.85em;
+        white-space: nowrap;
+    }
+
+    .app-main {
+        padding: 15px;
+    }
+
+    section h2, section h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 0.9em;padding: 6px;
+    }
+
+    .submit-button {
+        font-size: 0.95em;
+        padding: 10px 18px;
+        margin-top: 15px;
+    }
+
+    #visualizacao-prontuario {
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    #visualizacao-prontuario h2 {
+        font-size: 1em;
+    }
+
+    #dados-salvos {
+        font-size: 0.8em;
+    }
+}
+
+/* Para Celulares (largura máxima de 320px) - Menu Hambúrguer */
+@media (max-width: 320px) {
+    .app-header {
+        padding-right: 50px; /* Espaço para o ícone do menu */
+    }
+
+    .app-header img{
+        width: 100px;
+        margin-bottom: -20px;
+    }
+
+    .menu-icon {
+        display: flex; /* Mostra o ícone do menu */
+    }
+
+    .app-nav {
+        display: none; /* Oculta a navegação principal por padrão */
+        position: absolute;
+        top: 60px; /* Abaixo do cabeçalho */
+        left: 0;
+        width: 100%;
+        background-color: #343a40; /* Cor de fundo escura para o menu */
+        flex-direction: column;
+        align-items: center;
+        z-index: 10; /* Garante que o menu fique sobre outros elementos */
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        padding: 10px 0;
+    }
+
+    .app-nav.open {
+        display: flex; /* Mostra a navegação quando a classe 'open' é adicionada */
+    }
+
+    .app-nav button {
+        width: 90%;
+        margin: 5px 0;
+        background-color: transparent;
+        color: white;
+        border: 1px solid #555;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 1em;
+        text-align: center;
+    }
+
+    .app-nav button.ativo,
+    .app-nav button:hover {
+        background-color: #74CCCF;
+        border-color: #74CCCF;
+    }
+
+    .app-main {
+        padding: 15px; /* Ajuste o padding do conteúdo principal para telas menores */
+    }
+
+    section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 0.9em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .submit-button {
+        font-size: 1em;
+        padding: 12px 25px;
+        margin-top: 20px;
+    }
+
+    #visualizacao-prontuario {
+        margin-top: 30px;
+        padding: 15px;
+    }
+
+    #visualizacao-prontuario h2 {
+        font-size: 1.1em;
+    }
+
+    #dados-salvos {
+        font-size: 0.85em;
+        padding: 10px;
+    }
+}
+
+/* Para telas maiores que 320px, a navegação continua como antes */
+@media (min-width: 321px) {
+    .menu-icon {
+        display: none; /* Oculta o ícone em telas maiores */
+    }
+}
